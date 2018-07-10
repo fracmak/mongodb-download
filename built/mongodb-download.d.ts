@@ -53,9 +53,11 @@ export declare class MongoDBDownload {
 export declare class MongoDBPlatform {
     platform: string;
     arch: string;
+    ssl: string;
     debug: any;
     constructor(platform: string, arch: string);
     getPlatform(): string;
+    getSSL(): string;
     getArch(): string;
     getArchiveType(): string;
     getCommonReleaseString(): string;

@@ -428,7 +428,7 @@ export class MongoDBDownload {
     return new Promise<string>((resolve, reject) => {
       //var name = "mongodb-" + mongo_platform + "-" + mongo_arch;
       let name = "mongodb-" + 
-      this.mongoDBPlatform.getPlatform() + "-ssl-" +
+      this.mongoDBPlatform.getPlatform() + "-" + this.mongoDBPlatform.getSSL() +
       this.mongoDBPlatform.getArch();
       
       this.mongoDBPlatform.getOSVersionString().then(osString => {
@@ -447,16 +447,22 @@ export class MongoDBDownload {
 export class MongoDBPlatform {
   platform: string;
   arch: string;
+  ssl: string;
   debug: any;
   
   constructor(platform: string, arch: string) {
     this.debug = Debug('mongodb-download-MongoDBPlatform');
     this.platform = this.translatePlatform(platform);
+    this.ssl = this.platform === 'osx' ? 'ssl-' : '';
     this.arch = this.translateArch(arch, this.getPlatform());
   }
   
   getPlatform(): string {
     return this.platform;
+  }
+
+  getSSL(): string {
+    return this.ssl;
   }
   
   getArch(): string {
