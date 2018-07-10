@@ -428,7 +428,7 @@ export class MongoDBDownload {
     return new Promise<string>((resolve, reject) => {
       //var name = "mongodb-" + mongo_platform + "-" + mongo_arch;
       let name = "mongodb-" + 
-      this.mongoDBPlatform.getPlatform() + "-" +
+      this.mongoDBPlatform.getPlatform() + "-ssl-" +
       this.mongoDBPlatform.getArch();
       
       this.mongoDBPlatform.getOSVersionString().then(osString => {
