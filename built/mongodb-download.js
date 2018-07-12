@@ -14,7 +14,7 @@ var DOWNLOAD_URI = "https://downloads.mongodb.org";
 var MONGODB_VERSION = "latest";
 var MongoDBDownload = /** @class */ (function () {
     function MongoDBDownload(_a) {
-        var _b = _a.platform, platform = _b === void 0 ? os.platform() : _b, _c = _a.arch, arch = _c === void 0 ? os.arch() : _c, _d = _a.downloadDir, downloadDir = _d === void 0 ? os.tmpdir() : _d, _e = _a.version, version = _e === void 0 ? MONGODB_VERSION : _e, _f = _a.http, http = _f === void 0 ? {} : _f;
+        var _b = _a.platform, platform = _b === void 0 ? os.platform() : _b, _c = _a.arch, arch = _c === void 0 ? os.arch() : _c, _d = _a.downloadDir, downloadDir = _d === void 0 ? path.resolve(os.homedir(), '.mongodb-prebuilt') : _d, _e = _a.version, version = _e === void 0 ? MONGODB_VERSION : _e, _f = _a.http, http = _f === void 0 ? {} : _f;
         this.options = {
             "platform": platform,
             "arch": arch,

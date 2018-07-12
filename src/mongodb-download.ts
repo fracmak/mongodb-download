@@ -37,7 +37,7 @@ export class MongoDBDownload {
   constructor( {
     platform = os.platform(),
     arch = os.arch(),
-    downloadDir = os.tmpdir(),
+    downloadDir = path.resolve(os.homedir(), '.mongodb-prebuilt'),
     version = MONGODB_VERSION,
     http = {}
   }) {
