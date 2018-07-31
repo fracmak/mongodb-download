@@ -390,9 +390,13 @@ var MongoDBDownload = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             //var name = "mongodb-" + mongo_platform + "-" + mongo_arch;
-            var name = "mongodb-" +
-                _this.mongoDBPlatform.getPlatform() + "-" + _this.mongoDBPlatform.getSSL() +
-                _this.mongoDBPlatform.getArch();
+            var name = [
+                "mongodb",
+                _this.mongoDBPlatform.getPlatform(),
+                _this.mongoDBPlatform.getSSL(),
+                _this.mongoDBPlatform.getArch(),
+                _this.mongoDBPlatform.getVariant(),
+            ].filter(function (x) { return x; }).join('-');
             _this.mongoDBPlatform.getOSVersionString().then(function (osString) {
                 osString && (name += "-" + osString);
             }, function (error) {
@@ -410,7 +414,8 @@ var MongoDBPlatform = /** @class */ (function () {
     function MongoDBPlatform(platform, arch) {
         this.debug = Debug('mongodb-download-MongoDBPlatform');
         this.platform = this.translatePlatform(platform);
-        this.ssl = this.platform === 'osx' ? 'ssl-' : '';
+        this.ssl = this.getPlatform() === 'osx' ? 'ssl' : '';
+        this.variant = this.getPlatform() === 'win32' ? '2008plus-ssl' : '';
         this.arch = this.translateArch(arch, this.getPlatform());
     }
     MongoDBPlatform.prototype.getPlatform = function () {
@@ -418,6 +423,9 @@ var MongoDBPlatform = /** @class */ (function () {
     };
     MongoDBPlatform.prototype.getSSL = function () {
         return this.ssl;
+    };
+    MongoDBPlatform.prototype.getVariant = function () {
+        return this.variant;
     };
     MongoDBPlatform.prototype.getArch = function () {
         return this.arch;

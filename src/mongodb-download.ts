@@ -427,9 +427,13 @@ export class MongoDBDownload {
   getArchiveName(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       //var name = "mongodb-" + mongo_platform + "-" + mongo_arch;
-      let name = "mongodb-" + 
-      this.mongoDBPlatform.getPlatform() + "-" + this.mongoDBPlatform.getSSL() +
-      this.mongoDBPlatform.getArch();
+      let name = [
+        "mongodb",
+        this.mongoDBPlatform.getPlatform(),
+        this.mongoDBPlatform.getSSL(),
+        this.mongoDBPlatform.getArch(),
+        this.mongoDBPlatform.getVariant(),
+      ].filter(x => x).join('-');
       
       this.mongoDBPlatform.getOSVersionString().then(osString => {
         osString && (name += `-${osString}`);
@@ -448,12 +452,14 @@ export class MongoDBPlatform {
   platform: string;
   arch: string;
   ssl: string;
+  variant: string;
   debug: any;
   
   constructor(platform: string, arch: string) {
     this.debug = Debug('mongodb-download-MongoDBPlatform');
     this.platform = this.translatePlatform(platform);
-    this.ssl = this.platform === 'osx' ? 'ssl-' : '';
+    this.ssl = this.getPlatform() === 'osx' ? 'ssl' : '';
+    this.variant = this.getPlatform() === 'win32' ? '2008plus-ssl' : '';
     this.arch = this.translateArch(arch, this.getPlatform());
   }
   
@@ -465,6 +471,10 @@ export class MongoDBPlatform {
     return this.ssl;
   }
   
+  getVariant(): string {
+    return this.variant;
+  }
+
   getArch(): string {
     return this.arch;
   }

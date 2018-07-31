@@ -54,10 +54,12 @@ export declare class MongoDBPlatform {
     platform: string;
     arch: string;
     ssl: string;
+    variant: string;
     debug: any;
     constructor(platform: string, arch: string);
     getPlatform(): string;
     getSSL(): string;
+    getVariant(): string;
     getArch(): string;
     getArchiveType(): string;
     getCommonReleaseString(): string;
